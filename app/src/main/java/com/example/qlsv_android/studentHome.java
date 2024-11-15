@@ -11,8 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class studentHome extends AppCompatActivity {
-
-    Button btn_student_logout;
+    Button btnmonhoc,btnlichhoc;
+    //Button btn_student_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +20,14 @@ public class studentHome extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_student_home);
 
-        btn_student_logout = (Button) findViewById(R.id.btn_student_logout);
+        //btn_student_logout = (Button) findViewById(R.id.btn_student_logout);
 
-        btn_student_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        btn_student_logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

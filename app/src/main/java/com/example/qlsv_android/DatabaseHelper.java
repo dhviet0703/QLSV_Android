@@ -1,10 +1,15 @@
 package com.example.qlsv_android;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.qlsv_android.model.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SinhVien.db";
@@ -57,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ten_mon TEXT," +
                 "tin_chi INTEGER," +
+                "ky INTEGER," +
                 "mo_ta TEXT" +
                 ");");
 
@@ -84,5 +90,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Lop_Hoc");
         onCreate(db);
     }
+
+    public void addUser(String hoTen, String username, String password, String role) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ho_ten", hoTen);
+        values.put("username", username);
+        values.put("password", password);
+        values.put("role", role);
+
+        db.insert("user", null, values);
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public User getUser(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + "user" + " WHERE " + "username" + " = ? AND " + "password" + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+
+        User user = null;
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            user.setHoTen(cursor.getString(cursor.getColumnIndex("ho_ten")));
+            user.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+            user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+            user.setNgaySinh(cursor.getString(cursor.getColumnIndex("ngay_sinh")));
+            user.setGioiTinh(cursor.getString(cursor.getColumnIndex("gioi_tinh")));
+            user.setDiaChi(cursor.getString(cursor.getColumnIndex("dia_chi")));
+            user.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+            user.setDienThoai(cursor.getString(cursor.getColumnIndex("dien_thoai")));
+            user.setRole(cursor.getString(cursor.getColumnIndex("role")));
+            user.setCreatedAt(cursor.getString(cursor.getColumnIndex("created_at")));
+            user.setUpdatedAt(cursor.getString(cursor.getColumnIndex("updated_at")));
+        }
+
+        cursor.close();
+        db.close();
+
+        return user;
+    }
+
 
 }

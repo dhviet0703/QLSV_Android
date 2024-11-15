@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlsv_android.model.User;
+
 public class MainActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
+        dbHelper.addUser("admin", "admin", "123456", "giangvien");
 
         edit_login_account = (EditText) findViewById(R.id.edit_login_account);
         edit_login_password = (EditText) findViewById(R.id.edit_login_password);
@@ -39,25 +42,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String account = edit_login_account.getText().toString();
                 String password = edit_login_password.getText().toString();
-
-                if (account.equals("admin") && password.equals("123")) {
-                    Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách admin!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, teacherHome.class);
-                    startActivity(intent);
-                } else if (account.equals("student") && password.equals("111")) {
-                    Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách student!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, studentHome.class);
-                    startActivity(intent);
+                User user = dbHelper.getUser(account, password);
+                if (user != null) {
+                    String role = user.getRole();
+                    if (role.equals("giangvien")) {
+                        Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách giảng viên!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, teacherHome.class);
+                        startActivity(intent);
+                    } else if (role.equals("sinhvien")) {
+                        Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách sinh viên!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, studentHome.class);
+                        startActivity(intent);
+                    } else if (role.equals("admin")) {
+                        Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách admin!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    if (!account.equals("admin") && !account.equals("student")) {
-                        edit_login_account.setError("Account chưa đúng!");
+                    if (account.isEmpty()) {
+                        edit_login_account.setError("Vui lòng nhập tài khoản!");
                     } else {
-                        edit_login_password.setError("Password chưa đúng!");
+                        edit_login_password.setError("Tài khoản hoặc mật khẩu chưa đúng!");
                     }
                 }
 
-                edit_login_account.setText(null);
-                edit_login_password.setText(null);
             }
         });
 

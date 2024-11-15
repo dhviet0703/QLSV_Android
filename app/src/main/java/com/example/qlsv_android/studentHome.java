@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class studentHome extends AppCompatActivity {
-    Button btnmonhoc,btnlichhoc;
+    Button btnmonhoc,btnlichhoc,btnbutton6;
     //Button btn_student_logout;
 
     @Override

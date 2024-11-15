@@ -12,6 +12,10 @@
         android:layout_height="729dp"
         android:background="#60ACE7"
         android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:circularflow_defaultRadius="20dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
@@ -25,57 +29,98 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="171dp"
-            app:srcCompat="@drawable/ok" />
+            app:srcCompat="@drawable/_50px_logo_dhktdn" />
 
         <LinearLayout
-            android:layout_width="365dp"
-            android:layout_height="235dp"
-            android:layout_gravity="center"
-            android:background="#EFDCDC"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+
+            android:background="@drawable/rounder_layout"> <!-- Nền bo tròn -->
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Account" />
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="Username"
+                android:textColor="#333333" />
 
             <EditText
                 android:id="@+id/edit_login_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Nhập tài khoản của bạn"
-                android:inputType="text" />
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Username"
+                android:padding="10dp"
+                android:textColorHint="#B0BEC5" />
 
+            <!-- Password Field -->
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Password" />
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="Password"
+                android:textColor="#333333" />
 
             <EditText
                 android:id="@+id/edit_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Nhập mật khẩu của bạn"
-                android:inputType="text" />
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColorHint="#B0BEC5" />
 
-            <TextView
-                android:id="@+id/textView5"
+            <!-- Remember and Register Row -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="53dp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_gravity="center_vertical">
 
+                <CheckBox
+                    android:id="@+id/checkbox_remember"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remember"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:id="@+id/text_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:paddingEnd="16dp"
+                    android:text="Register"
+                    android:textAlignment="textEnd"
+                    android:textColor="#1E88E5" />
+            </LinearLayout>
+
+            <!-- Login Button -->
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="161dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#2A2A2A"
-                android:backgroundTint="#BC9191"
+                android:layout_margin="16dp"
+                android:backgroundTint="#2A2A2A"
                 android:text="Login"
-                app:cornerRadius="100dp" />
+                android:textColor="@color/white"
+                android:padding="12dp"
+                android:textAllCaps="false"
+                android:background="@drawable/rounded_button"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </LinearLayout>

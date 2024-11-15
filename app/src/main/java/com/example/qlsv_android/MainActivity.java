@@ -45,9 +45,12 @@ public class MainActivity extends AppCompatActivity {
                 User user = dbHelper.getUser(account, password);
                 if (user != null) {
                     String role = user.getRole();
+                    String userName = user.getHoTen();
+
                     if (role.equals("giangvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách giảng viên!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, teacherActivity.class);
+                        intent.putExtra("userName", userName);
                         startActivity(intent);
                     } else if (role.equals("sinhvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách sinh viên!", Toast.LENGTH_SHORT).show();

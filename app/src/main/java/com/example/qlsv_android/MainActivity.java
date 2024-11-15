@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     String role = user.getRole();
                     if (role.equals("giangvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách giảng viên!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, teacherHome.class);
+                        Intent intent = new Intent(MainActivity.this, teacherActivity.class);
                         startActivity(intent);
                     } else if (role.equals("sinhvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách sinh viên!", Toast.LENGTH_SHORT).show();

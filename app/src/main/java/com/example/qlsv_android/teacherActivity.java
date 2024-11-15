@@ -1,8 +1,13 @@
 package com.example.qlsv_android;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -21,6 +26,9 @@ public class teacherActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTeacherBinding binding;
 
+    ImageButton btnMonHoc, btnLichHoc, btnSinhVien ;
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,19 +36,30 @@ public class teacherActivity extends AppCompatActivity {
         binding = ActivityTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarTeacher.toolbar);
-        binding.appBarTeacher.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+       setSupportActionBar(binding.appBarTeacher.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        String userName = getIntent().getStringExtra("userName");
+
+        TextView helloUserInfo = findViewById(R.id.hello_user_info);
+        if (helloUserInfo != null && userName != null) {
+            helloUserInfo.setText("Xin chào, " + userName);
+        }
+
+        btnMonHoc = findViewById(R.id.btn_GV_MonHoc);
+        btnLichHoc = findViewById(R.id.btn_GV_LichHoc);
+        btnSinhVien = findViewById(R.id.btn_GV_SinhVien);
+
+        btnMonHoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(teacherActivity.this, MonHocActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_info, R.id.nav_password, R.id.nav_logout)
                 .setOpenableLayout(drawer)
@@ -49,6 +68,7 @@ public class teacherActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

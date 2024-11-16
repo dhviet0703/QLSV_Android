@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (role.equals("giangvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách giảng viên!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, teacherActivity.class);
+                        Intent intent = new Intent(MainActivity.this, TeacherActivity.class);
                         intent.putExtra("userName", userName);
                         startActivity(intent);
                     } else if (role.equals("sinhvien")) {

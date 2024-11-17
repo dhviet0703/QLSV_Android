@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
         dbHelper.addUser("admin", "admin", "123456", "giangvien");
-
+        dbHelper.addUser("student", "student", "1", "sinhvien");
         edit_login_account = (EditText) findViewById(R.id.edit_login_account);
         edit_login_password = (EditText) findViewById(R.id.edit_login_password);
         btn_login = (Button) findViewById(R.id.btn_login);
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (role.equals("sinhvien")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách sinh viên!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, studentHome.class);
+                        intent.putExtra("userName", userName);
                         startActivity(intent);
                     } else if (role.equals("admin")) {
                         Toast.makeText(MainActivity.this, "Chúc mừng, bạn đã đăng nhập thành công với tư cách admin!", Toast.LENGTH_SHORT).show();

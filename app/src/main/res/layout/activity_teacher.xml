@@ -38,7 +38,7 @@
                         android:layout_marginLeft="100dp"
                         android:text="this"
                         android:textAlignment="center"
-                        android:textSize="34sp" />
+                        android:textSize="20sp" />
 
                 </androidx.appcompat.widget.Toolbar>
 

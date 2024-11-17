@@ -6,20 +6,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    tools:context=".TeacherActivity">
 
-    <include
-        android:id="@+id/app_bar_teacher"
-        layout="@layout/app_bar_teacher"
+    <!-- Main content -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:theme="?attr/actionBarTheme">
+
+                    <TextView
+                        android:id="@+id/hello_user_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:text="this"
+                        android:textAlignment="center"
+                        android:textSize="34sp" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    app:columnCount="2"
+                    app:rowCount="2">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_MonHoc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:layout_columnWeight="1">
+
+                        <ImageButton
+                            android:id="@+id/btn_GV_MonHoc"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icons8_book_50" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_LichHoc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:layout_columnWeight="1">
+
+                        <ImageButton
+                            android:id="@+id/btn_GV_LichHoc"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icons8_calendar_50" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_SinhVien"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:layout_columnWeight="1">
+
+                        <ImageButton
+                            android:id="@+id/btn_GV_SinhVien"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:padding="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/icons8_student_50" />
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.gridlayout.widget.GridLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_teacher"
-        app:menu="@menu/activity_main_drawer" />
+        app:headerLayout="@layout/header"
+        app:menu="@menu/menu_main" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

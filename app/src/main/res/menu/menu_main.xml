@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_info"
+            android:title="@string/menu_info"
+            android:icon="@drawable/icons8_info_48"
+        />
+
+        <item
+            android:id="@+id/nav_password"
+            android:title="@string/menu_password"
+            android:icon="@drawable/icons8_password_48"
+            />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/menu_logout"
+            android:icon="@drawable/icons8_logout_48"
+            />
+    </group>
+</menu>

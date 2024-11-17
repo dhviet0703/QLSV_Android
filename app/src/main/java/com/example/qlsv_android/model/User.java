@@ -1,6 +1,8 @@
 package com.example.qlsv_android.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User  implements Serializable {
     private int id;
     private String hoTen;
     private String username;
@@ -70,7 +72,7 @@ public class User {
     }
 
     public void setNgaySinh(String ngaySinh) {
-        this.ngaySinh = ngaySinh;
+        this.ngaySinh = String.valueOf(ngaySinh);
     }
 
     public String getGioiTinh() {
@@ -128,4 +130,6 @@ public class User {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+
 }

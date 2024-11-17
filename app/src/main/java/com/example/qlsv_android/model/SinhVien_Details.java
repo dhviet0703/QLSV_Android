@@ -1,6 +1,8 @@
 package com.example.qlsv_android.model;
 
-public class SinhVien_Details {
+import java.io.Serializable;
+
+public class SinhVien_Details implements Serializable {
     private int userId;
     private int lopId;
     private String nganhHoc;
@@ -11,6 +13,10 @@ public class SinhVien_Details {
         this.lopId = lopId;
         this.nganhHoc = nganhHoc;
         this.khoaHoc = khoaHoc;
+    }
+
+    public SinhVien_Details() {
+
     }
 
     public int getUserId() {

@@ -7,4 +7,150 @@
     android:layout_height="match_parent"
     tools:context=".MonHocActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="182dp"
+        tools:ignore="ExtraText">
+
+        <!-- Toolbar -->
+
+        <!-- Spinner for Semester 1 -->
+        <!-- Increased height -->
+        android:layout_below="@+id/toolbar4"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_background" />
+
+        <!-- Spinner for Semester 2 -->
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/icons8_back_64" />
+
+            <!-- Title Text -->
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/chuong_trinh_khung"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/txtNganh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/spinner_hk1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="38dp"
+            android:layout_marginEnd="315dp"
+            android:layout_marginBottom="29dp"
+            android:text="TextView" />
+
+        <Spinner
+            android:id="@+id/spinner_hk1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounder_layout"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="509dp" />
+
+        <!-- Increased height -->
+        android:layout_below="@+id/spinner_hk1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_background" />
+
+        <!-- Spinner for Semester 3 -->
+
+        <Spinner
+            android:id="@+id/spinner_hk2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounder_layout"
+            android:layout_alignBottom="@+id/spinner_hk1"
+            android:layout_marginBottom="-95dp" />
+
+        <!-- Increased height -->
+        android:layout_below="@+id/spinner_hk2"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_background" />
+
+        <!-- Spinner for Semester 4 -->
+
+        <Spinner
+            android:id="@+id/spinner_hk3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounder_layout"
+            android:layout_alignBottom="@+id/spinner_hk2"
+            android:layout_marginBottom="-95dp" />
+
+        <!-- Increased height -->
+        android:layout_below="@+id/spinner_hk3"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_background" />
+
+        <!-- Spinner for Semester 5 -->
+        <Spinner
+            android:id="@+id/spinner_hk4"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounder_layout"
+            android:layout_alignBottom="@+id/spinner_hk3"
+            android:layout_marginBottom="-95dp" />
+
+        <Spinner
+            android:id="@+id/spinner_hk5"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounder_layout"
+            android:layout_alignBottom="@+id/spinner_hk4"
+            android:layout_marginBottom="-95dp" /> <!-- Increased height -->
+        android:layout_below="@+id/spinner_hk4"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_text_background" />
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

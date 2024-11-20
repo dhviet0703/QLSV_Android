@@ -18,4 +18,15 @@
 
     <string name="nav_open"> Open navigation </string>
     <string name="nav_close"> Close navigation </string>
+    <string name="save">save</string>
+    <string name="edit">edit</string>
+    <string name="reset_password">Đặt lại mật khẩu</string>
+    <string name="thong_tin">Thông tin</string>
+    <string name="current_password">Mật khẩu hiện tại:\n</string>
+    <string name="new_password">Mật khẩu mới:</string>
+    <string name="input_newpass">Nhập mật khẩu mới</string>
+    <string name="input_current_password">Nhập mật khẩu hiện tại</string>
+    <string name="input_reNewPass">Nhập lại mật khẩu</string>
+    <string name="comfirm">Xác nhận</string>
+
 </resources>

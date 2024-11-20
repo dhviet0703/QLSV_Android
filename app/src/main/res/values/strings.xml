@@ -28,5 +28,6 @@
     <string name="input_current_password">Nhập mật khẩu hiện tại</string>
     <string name="input_reNewPass">Nhập lại mật khẩu</string>
     <string name="comfirm">Xác nhận</string>
+    <string name="chuong_trinh_khung">Chương trình khung\n</string>
 
 </resources>

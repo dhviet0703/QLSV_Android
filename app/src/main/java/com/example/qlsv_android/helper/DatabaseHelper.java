@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SinhVien.db";
-    private static final int DATABASE_VERSION  = 1;
+    private static final int DATABASE_VERSION  = 2;
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -90,6 +90,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(monhoc_id) REFERENCES Mon_Hoc(id)," +
                 "FOREIGN KEY(giangvien_id) REFERENCES giangvien_detail(user_id)" +
                 ");");
+
+        db.execSQL("INSERT INTO Mon_Hoc (ten_mon, tin_chi, ky, mo_ta) VALUES " +
+                "('Toán cao cấp 1', 3, 1, 'Môn học về toán cao cấp cơ bản')," +
+                "('Lập trình cơ bản', 4, 1, 'Môn học về lập trình cơ bản trong ngôn ngữ C')," +
+                "('Kỹ năng mềm', 2, 1, 'Phát triển kỹ năng giao tiếp và làm việc nhóm');");
+
+        db.execSQL("INSERT INTO Mon_Hoc (ten_mon, tin_chi, ky, mo_ta) VALUES " +
+                "('Toán cao cấp 2', 3, 2, 'Môn học tiếp theo của toán cao cấp 1')," +
+                "('Cấu trúc dữ liệu', 4, 2, 'Học về cấu trúc dữ liệu trong lập trình')," +
+                "('Hệ điều hành', 3, 2, 'Giới thiệu về hệ điều hành và các nguyên lý cơ bản');");
+
+        db.execSQL("INSERT INTO Mon_Hoc (ten_mon, tin_chi, ky, mo_ta) VALUES " +
+                "('Cơ sở dữ liệu', 3, 3, 'Kiến thức cơ bản về cơ sở dữ liệu và SQL')," +
+                "('Mạng máy tính', 4, 3, 'Giới thiệu mạng máy tính và giao thức mạng')," +
+                "('Phân tích thiết kế hệ thống', 3, 3, 'Phương pháp phân tích và thiết kế hệ thống phần mềm');");
+
+        db.execSQL("INSERT INTO Mon_Hoc (ten_mon, tin_chi, ky, mo_ta) VALUES " +
+                "('Lập trình hướng đối tượng', 4, 4, 'Lập trình theo phương pháp hướng đối tượng với Java')," +
+                "('Đồ án phần mềm', 3, 4, 'Thực hiện dự án phần mềm thực tế')," +
+                "('Kiến trúc máy tính', 3, 4, 'Giới thiệu kiến trúc phần cứng của máy tính');");
+
+        db.execSQL("INSERT INTO Mon_Hoc (ten_mon, tin_chi, ky, mo_ta) VALUES " +
+                "('Trí tuệ nhân tạo', 3, 5, 'Cơ bản về trí tuệ nhân tạo và học máy')," +
+                "('An toàn thông tin', 3, 5, 'Kiến thức về bảo mật và an toàn thông tin')," +
+                "('Phát triển ứng dụng web', 4, 5, 'Thiết kế và phát triển ứng dụng web hiện đại');");
     }
 
     @Override

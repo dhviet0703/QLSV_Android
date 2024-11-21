@@ -83,7 +83,22 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
         btnSinhVien = findViewById(R.id.btn_GV_SinhVien);
 
 
+        btnSinhVien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeacherActivity.this, ActSinhVienActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        btnLichHoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeacherActivity.this, LichHocActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
         btnMonHoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

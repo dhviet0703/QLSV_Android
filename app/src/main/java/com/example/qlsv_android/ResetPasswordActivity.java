@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +25,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     DatabaseHelper dbHelper ;
 
     SQLiteDatabase db ;
+
+    ImageButton imgButton ;
 
     Button btnComfirm ;
     @SuppressLint("MissingInflatedId")
@@ -76,6 +80,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(ResetPasswordActivity.this, "Mật khẩu hiện tại không đúng!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        imgButton = findViewById(R.id.imageButton);
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

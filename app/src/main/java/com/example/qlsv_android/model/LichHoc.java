@@ -19,6 +19,9 @@ public class LichHoc {
         this.gioKetThuc = gioKetThuc;
     }
 
+    public LichHoc(String monhocId, String gioBatDau, String gioKetThuc, String giangvienId, String ngayHoc) {
+    }
+
     public int getId() {
         return id;
     }

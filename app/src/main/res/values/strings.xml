@@ -29,5 +29,21 @@
     <string name="input_reNewPass">Nhập lại mật khẩu</string>
     <string name="comfirm">Xác nhận</string>
     <string name="chuong_trinh_khung">Chương trình khung\n</string>
+    <string name="ql_sinhvien">Quản lý sinh viên\n</string>
+    <string name="view">Xem</string>
+    <string name="add">Thêm</string>
+    <string name="delete">Xóa</string>
+    <string name="update">Cập nhật</string>
+    <string name="list_hint">Danh sách các sinh viên</string>
+    <string name="add_hint">Thêm Thông tin sinh viên</string>
+    <string name="view_hint">Xem Thông Tin Sinh Viên</string>
+    <string name="update_hint">Cập nhật Thông tin sinh viên</string>
+    <string name="delete_hint">Xóa sinh viên</string>
+    <string name="create_class">Tạo Lớp Học</string>
+    <string name="delete_class">Xóa Lớp Học</string>
+    <string name="view_class">Xem Lớp Học</string>
+    <string name="list_hint_class">Danh sách các lớp học</string>
+    <string name="lich_hoc">Lịch học\n</string>
+
 
 </resources>

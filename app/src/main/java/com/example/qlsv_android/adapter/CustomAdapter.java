@@ -49,7 +49,6 @@ public class CustomAdapter extends ArrayAdapter<String> {
         editInfo.setText(dataList.get(position));
         editInfo.setEnabled(isEditable);
 
-        // Lưu thay đổi khi người dùng chỉnh sửa
         editInfo.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 dataList.set(position, editInfo.getText().toString());

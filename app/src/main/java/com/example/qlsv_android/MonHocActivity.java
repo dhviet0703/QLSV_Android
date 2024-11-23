@@ -95,7 +95,6 @@ public class MonHocActivity extends AppCompatActivity {
             subjects.add(0, "Học kì" + i + ": " + totalCredits);
         }
 
-        // Tạo adapter và gán vào Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

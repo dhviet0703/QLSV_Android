@@ -5,7 +5,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class InfoActivity extends AppCompatActivity {
     TextView txtName;
     ListView listView;
     Button btnUpdate;
+    ImageButton btnBack ;
     private boolean isEditing = false;
     private CustomAdapter adapter;
 
@@ -42,8 +44,9 @@ public class InfoActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getReadableDatabase();
         txtName = findViewById(R.id.name);
-        btnUpdate = findViewById(R.id.btnUpdate);
+        btnUpdate = findViewById(R.id.btnSearch);
         listView = findViewById(R.id.listView);
+        btnBack = findViewById(R.id.imageBtnBack);
         User user = (User) getIntent().getSerializableExtra("user");
 
         if (user != null) {
@@ -53,6 +56,12 @@ public class InfoActivity extends AppCompatActivity {
             txtName.setText(user.getHoTen());
         }
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnUpdate.setOnClickListener(v -> toggleEditing(user));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

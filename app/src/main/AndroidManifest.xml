@@ -13,6 +13,12 @@
         android:theme="@style/Theme.QLSV_android"
         tools:targetApi="33">
         <activity
+            android:name=".LichHocActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ActSinhVienActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity

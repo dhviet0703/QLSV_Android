@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SinhVien.db";
-    private static final int DATABASE_VERSION  = 2;
+    private static final int DATABASE_VERSION  = 4;
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -115,6 +115,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('Trí tuệ nhân tạo', 3, 5, 'Cơ bản về trí tuệ nhân tạo và học máy')," +
                 "('An toàn thông tin', 3, 5, 'Kiến thức về bảo mật và an toàn thông tin')," +
                 "('Phát triển ứng dụng web', 4, 5, 'Thiết kế và phát triển ứng dụng web hiện đại');");
+
+        // Lop_Hoc
+        db.execSQL("INSERT INTO Lop_Hoc (ten_lop, khoa) VALUES ('CNTT1', '2023');");
+        db.execSQL("INSERT INTO Lop_Hoc (ten_lop, khoa) VALUES ('CNTT2', '2022');");
+        db.execSQL("INSERT INTO Lop_Hoc (ten_lop, khoa) VALUES ('QTKD1', '2023');");
+
+        // user
+        db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
+                "VALUES ('Nguyen Van A', 'nguyenvana', 'password123', '2001-05-12', 'Nam', 'Ha Noi', 'vana@example.com', '0912345678', 'sinhvien', '2023-11-01', '2023-11-01');");
+        db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
+                "VALUES ('Tran Thi B', 'tranthib', 'password123', '2000-11-22', 'Nu', 'Hai Phong', 'thib@example.com', '0934567890', 'sinhvien', '2023-11-01', '2023-11-01');");
+        db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
+                "VALUES ('Le Van C', 'levanc', 'password123', '1990-01-15', 'Nam', 'Da Nang', 'vanc@example.com', '0987654321', 'giangvien', '2023-11-01', '2023-11-01');");
+        db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
+                "VALUES ('Admin User', 'admin', 'adminpassword', '1985-08-01', 'Nam', 'Ho Chi Minh', 'admin@example.com', '0901234567', 'admin', '2023-11-01', '2023-11-01');");
+
+        //sinhvien_detail
+
+        db.execSQL("INSERT INTO sinhvien_detail (user_id, lop_id, nganh_hoc, khoa_hoc) " +
+                "VALUES (1, 1, 'Công nghệ thông tin', 'Khoa CNTT');");
+        db.execSQL("INSERT INTO sinhvien_detail (user_id, lop_id, nganh_hoc, khoa_hoc) " +
+                "VALUES (2, 2, 'Quản trị kinh doanh', 'Khoa QTKD');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (1, 1, 3, '2024-11-23', '08:00', '10:00');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (1, 2, 3, '2024-11-24', '10:15', '12:15');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (2, 3, 3, '2024-11-25', '13:00', '15:00');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (2, 4, 3, '2024-11-26', '15:30', '17:30');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (3, 5, 3, '2024-11-27', '08:00', '10:00');");
+
+        db.execSQL("INSERT INTO LichHoc (lop_id, monhoc_id, giangvien_id, ngay_hoc, gio_bat_dau, gio_ket_thuc) " +
+                "VALUES (3, 6, 3, '2024-11-28', '10:15', '12:15');");
+
+        db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
+                "VALUES ('Nguyen Thi D', 'nguyenthid', 'password123', '1988-03-15', 'Nu', 'Hue', 'thid@example.com', '0911122233', 'giangvien', '2023-11-01', '2023-11-01');");
+
+        db.execSQL("INSERT INTO giangvien_detail (user_id, khoa_id, hoc_vi, chuc_vu) " +
+                "VALUES (5, 'QTKD', 'Thạc sĩ', 'Giảng viên');");
+
     }
 
     @Override

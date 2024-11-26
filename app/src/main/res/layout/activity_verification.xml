@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".VerificationActivity">
     <LinearLayout
         android:layout_width="410dp"
         android:layout_height="907dp"
@@ -46,16 +45,16 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
-                android:text="Username"
+                android:text="Verify Code"
                 android:textColor="#333333" />
 
             <EditText
-                android:id="@+id/edit_forgot_user"
+                android:id="@+id/edit_verify_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Username"
+                android:hint="Verify code"
                 android:padding="10dp"
                 android:textColorHint="#B0BEC5" />
 
@@ -65,69 +64,41 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
-                android:text="Password"
+                android:text="New password"
                 android:textColor="#333333" />
 
             <EditText
-                android:id="@+id/edit_login_password"
+                android:id="@+id/edit_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/rounded_edittext"
-                android:hint="Password"
+                android:hint="New password"
                 android:inputType="textPassword"
                 android:padding="10dp"
                 android:textColorHint="#B0BEC5" />
 
             <!-- Remember and Register Row -->
-            <LinearLayout
-                android:layout_width="353dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
-
-                <CheckBox
-                    android:id="@+id/checkbox_remember"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remember"
-                    android:textColor="#333333" />
-
-                <TextView
-                    android:id="@+id/text_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:paddingEnd="16dp"
-                    android:text="Register"
-                    android:textAlignment="textEnd"
-                    android:textColor="#1E88E5" />
-            </LinearLayout>
 
             <!-- Login Button -->
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_verify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="#2A2A2A"
                 android:padding="12dp"
-                android:text="Login"
+                android:text="Verify"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/txt_forgot"
+                android:id="@+id/txt_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quên mật khẩu ?"
+                android:text="Login"
                 android:textAlignment="center"
                 android:textColor="#1E88E5" />
 

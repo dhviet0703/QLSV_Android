@@ -36,6 +36,13 @@
         </androidx.appcompat.widget.Toolbar>
 
         <!-- User Info Form -->
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="match_parent"
+            android:layout_height="212dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"

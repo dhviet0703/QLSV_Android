@@ -2,16 +2,24 @@ package com.example.qlsv_android;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,10 +29,12 @@ import com.example.qlsv_android.adapter.CustomAdapter;
 import com.example.qlsv_android.helper.DatabaseHelper;
 import com.example.qlsv_android.model.User;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InfoActivity extends AppCompatActivity {
+    private static final int REQUEST_IMAGE_PICKER = 1001;
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
@@ -35,7 +45,9 @@ public class InfoActivity extends AppCompatActivity {
     private boolean isEditing = false;
     private CustomAdapter adapter;
 
-    @SuppressLint("MissingInflatedId")
+    ImageView imageView;
+
+    @SuppressLint({"MissingInflatedId", "IntentReset"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +59,7 @@ public class InfoActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnSearch);
         listView = findViewById(R.id.listView);
         btnBack = findViewById(R.id.imageBtnBack);
+        imageView = findViewById(R.id.imgUser);
         User user = (User) getIntent().getSerializableExtra("user");
 
         if (user != null) {
@@ -69,7 +82,46 @@ public class InfoActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Bitmap userImage = getImageFromDatabase(user.getId());
+        if (userImage != null) {
+            imageView.setImageBitmap(userImage);
+        } else {
+            imageView.setImageResource(R.drawable.student); // Ảnh mặc định
+        }
+
+        imageView.setOnClickListener(v -> {
+            if (userHasImage(user.getId())) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Thay đổi ảnh")
+                        .setMessage("Bạn có muốn thay đổi ảnh không?")
+                        .setPositiveButton("Đồng ý", (dialog, which) -> openImagePicker())
+                        .setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss())
+                        .show();
+            } else {
+                openImagePicker();
+            }
+        });
+
     }
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_IMAGE_PICKER);
+    }
+
+    private boolean userHasImage(int userId) {
+        Cursor cursor = db.query("user", new String[]{"image"}, "id = ?", new String[]{String.valueOf(userId)}, null, null, null);
+        boolean hasImage = false;
+        if (cursor.moveToFirst()) {
+            byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
+            hasImage = imageBytes != null && imageBytes.length > 0;
+        }
+        cursor.close();
+        return hasImage;
+    }
+
+
     private List<String> loadUserData(User user) {
         List<String> dataList = new ArrayList<>();
         String roleQuery = "SELECT role FROM user WHERE id = ?";
@@ -243,5 +295,65 @@ public class InfoActivity extends AppCompatActivity {
                 return null;
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_PICKER && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                imageView.setImageBitmap(bitmap);
+
+                User user = (User) getIntent().getSerializableExtra("user");
+                if (user != null) {
+                    saveImageToDatabase(user.getId(), bitmap);
+                }
+
+                Toast.makeText(this, "Ảnh đã được cập nhật!", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "Lỗi khi chọn ảnh!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void saveImageToDatabase(int id, Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+
+        ContentValues values = new ContentValues();
+        values.put("image", imageBytes);
+
+        String userId = getUserId();
+        if (userId != null) {
+            String selection = "id = ?";
+            String[] selectionArgs = {userId};
+            db.update("user", values, selection, selectionArgs);
+        }
+    }
+
+    private Bitmap getImageFromDatabase(int userId) {
+        String query = "SELECT image FROM user WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+        if (cursor.moveToFirst()) {
+            byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow("image"));
+            cursor.close();
+            if (imageBytes != null) {
+                return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            }
+        }
+        cursor.close();
+        return null;
+    }
+
+    private String getUserId() {
+        User user = (User) getIntent().getSerializableExtra("user");
+        if (user != null) {
+            return String.valueOf(user.getId());
+        }
+        return null;
+    }
+
+
 
 }

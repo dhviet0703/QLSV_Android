@@ -5,15 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <LinearLayout
-        android:layout_width="410dp"
-        android:layout_height="907dp"
+        android:layout_width="402dp"
+        android:layout_height="915dp"
         android:background="#60ACE7"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         app:circularflow_defaultRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,13 +30,12 @@
             app:srcCompat="@drawable/_50px_logo_dhktdn" />
 
         <LinearLayout
-            android:layout_width="349dp"
-            android:layout_height="423dp"
+            android:layout_width="match_parent"
+            android:layout_height="499dp"
             android:layout_margin="20dp"
-
-
             android:background="@drawable/rounder_layout"
             android:gravity="center"
+
             android:orientation="vertical"> <!-- Nền bo tròn -->
 
             <TextView
@@ -50,12 +47,30 @@
                 android:textColor="#333333" />
 
             <EditText
-                android:id="@+id/edit_forgot_user"
+                android:id="@+id/edit_register_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Username"
+                android:padding="10dp"
+                android:textColorHint="#B0BEC5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="Email"
+                android:textColor="#333333" />
+
+            <EditText
+                android:id="@+id/edit_register_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Email"
                 android:padding="10dp"
                 android:textColorHint="#B0BEC5" />
 
@@ -69,7 +84,7 @@
                 android:textColor="#333333" />
 
             <EditText
-                android:id="@+id/edit_login_password"
+                android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -79,57 +94,60 @@
                 android:padding="10dp"
                 android:textColorHint="#B0BEC5" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:text="RePassword"
+                android:textColor="#333333" />
+
+            <EditText
+                android:id="@+id/edit_re_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="RePassword"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColorHint="#B0BEC5" />
             <!-- Remember and Register Row -->
             <LinearLayout
-                android:layout_width="353dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp">
 
-                <CheckBox
-                    android:id="@+id/checkbox_remember"
+                <TextView
+                    android:id="@+id/text_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Remember"
-                    android:textColor="#333333" />
-
-                <TextView
-                    android:id="@+id/text_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:paddingEnd="16dp"
-                    android:text="Register"
+                    android:text="Login"
                     android:textAlignment="textEnd"
                     android:textColor="#1E88E5" />
             </LinearLayout>
 
             <!-- Login Button -->
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:background="@drawable/rounded_button"
                 android:backgroundTint="#2A2A2A"
                 android:padding="12dp"
-                android:text="Login"
+                android:text="Register"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/txt_forgot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Quên mật khẩu ?"
-                android:textAlignment="center"
-                android:textColor="#1E88E5" />
 
         </LinearLayout>
     </LinearLayout>

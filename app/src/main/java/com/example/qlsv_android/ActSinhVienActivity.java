@@ -324,11 +324,9 @@ public class ActSinhVienActivity extends AppCompatActivity {
                         builder.create().show();
 
                     } else {
-                        // Show message if no students are found
                         Toast.makeText(ActSinhVienActivity.this, "No students found!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Show a message if the search field is empty
                     Toast.makeText(ActSinhVienActivity.this, "Please enter a name to search!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -360,7 +358,7 @@ public class ActSinhVienActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String choseClass = "";
                 if (spnUpdateClass.getAdapter() != null && spnUpdateClass.getAdapter().getCount() > 0) {
-                    choseClass  = spnUpdateClass.getItemAtPosition(0).toString();
+                    choseClass  = spnUpdateClass.getSelectedItem().toString();;
                     Log.d("btnUpdateClass", "choseClass" + choseClass);
 
                 } else {

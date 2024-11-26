@@ -83,6 +83,22 @@ public class studentHome extends AppCompatActivity implements NavigationView.OnN
         btnMonHocSV = findViewById(R.id.btn_SV_MonHoc);
         btnLichHocSV = findViewById(R.id.btn_SV_LichHoc);
 
+        btnMonHocSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSubject = new Intent(studentHome.this, MonHocActivity.class);
+                startActivity(intentSubject);
+            }
+        });
+        btnLichHocSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCalendar = new Intent(studentHome.this, LichHocActivity.class);
+                intentCalendar.putExtra("username", username);
+                startActivity(intentCalendar);
+            }
+        });
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

@@ -44,6 +44,8 @@
     <string name="view_class">Xem Lớp Học</string>
     <string name="list_hint_class">Danh sách các lớp học</string>
     <string name="lich_hoc">Lịch học\n</string>
+    <string name="select_subject">Chọn môn học\n</string>
+    <string name="select_class">Chọn lớp học\n</string>
 
 
 </resources>

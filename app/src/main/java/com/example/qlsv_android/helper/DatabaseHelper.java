@@ -6,15 +6,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.qlsv_android.Utils.PasswordUtils;
 import com.example.qlsv_android.model.GiangVienFullInfo;
 import com.example.qlsv_android.model.Giangvien_Details;
 import com.example.qlsv_android.model.SinhVienFullInfo;
 import com.example.qlsv_android.model.SinhVien_Details;
 import com.example.qlsv_android.model.User;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +30,8 @@ import java.util.Map;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SinhVien.db";
-    private static final int DATABASE_VERSION  = 4;
+    private static final int DATABASE_VERSION = 7;
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -47,6 +53,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "gioi_tinh CHECK(gioi_tinh IN ('Nam', 'Nu'))," +
                 "dia_chi TEXT," +
                 "email TEXT," +
+                "image BLOB," +
+                "verify_code TEXT," +
+                "timestamp TEXT," +
                 "dien_thoai TEXT," +
                 "role TEXT CHECK(role IN ('sinhvien', 'giangvien', 'admin'))," +
                 "created_at TEXT," +
@@ -172,16 +181,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS sinhvien_detail");
         db.execSQL("DROP TABLE IF EXISTS user");
         db.execSQL("DROP TABLE IF EXISTS Lop_Hoc");
+        if (oldVersion < 4) {
+            db.execSQL("ALTER TABLE user ADD COLUMN image BLOB");
+        }
         onCreate(db);
     }
 
-    public void addUser(String hoTen, String username, String password, String role) {
+    public void addUser(String hoTen, String username, String password, String role, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
         ContentValues values = new ContentValues();
-        values.put("ho_ten", hoTen);
         values.put("username", username);
-        values.put("password", password);
+        values.put("password", hashedPassword);
+        values.put("ho_ten", hoTen);
         values.put("role", role);
+        values.put("email", email);
+
         long userId = db.insert("user", null, values);
 
         if (userId != -1) {
@@ -208,32 +224,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
     @SuppressLint("Range")
-    public User getUser(String username, String password){
+    public User getUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + "user" + " WHERE " + "username" + " = ? AND " + "password" + " = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
-
+        String query = "SELECT * FROM user WHERE username = ?";
+        Cursor cursor = null;
         User user = null;
-        if (cursor.moveToFirst()) {
-            user = new User();
-            user.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            user.setHoTen(cursor.getString(cursor.getColumnIndex("ho_ten")));
-            user.setUsername(cursor.getString(cursor.getColumnIndex("username")));
-            user.setPassword(cursor.getString(cursor.getColumnIndex("password")));
-            user.setNgaySinh(cursor.getString(cursor.getColumnIndex("ngay_sinh")));
-            user.setGioiTinh(cursor.getString(cursor.getColumnIndex("gioi_tinh")));
-            user.setDiaChi(cursor.getString(cursor.getColumnIndex("dia_chi")));
-            user.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            user.setDienThoai(cursor.getString(cursor.getColumnIndex("dien_thoai")));
-            user.setRole(cursor.getString(cursor.getColumnIndex("role")));
-            user.setCreatedAt(cursor.getString(cursor.getColumnIndex("created_at")));
-            user.setUpdatedAt(cursor.getString(cursor.getColumnIndex("updated_at")));
-        }
 
-        cursor.close();
-        db.close();
+        try {
+            cursor = db.rawQuery(query, new String[]{username});
+
+            if (cursor.moveToFirst()) {
+                user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                user.setHoTen(cursor.getString(cursor.getColumnIndex("ho_ten")));
+                user.setUsername(cursor.getString(cursor.getColumnIndex("username")));
+                user.setPassword(cursor.getString(cursor.getColumnIndex("password"))); // Hashed password
+                user.setNgaySinh(cursor.getString(cursor.getColumnIndex("ngay_sinh")));
+                user.setGioiTinh(cursor.getString(cursor.getColumnIndex("gioi_tinh")));
+                user.setDiaChi(cursor.getString(cursor.getColumnIndex("dia_chi")));
+                user.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+                user.setDienThoai(cursor.getString(cursor.getColumnIndex("dien_thoai")));
+                user.setRole(cursor.getString(cursor.getColumnIndex("role")));
+                user.setCreatedAt(cursor.getString(cursor.getColumnIndex("created_at")));
+                user.setUpdatedAt(cursor.getString(cursor.getColumnIndex("updated_at")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
 
         return user;
     }
@@ -448,5 +472,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return success;
     }
 
+    public long updateUserImage(int userId, byte[] imageBytes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("image", imageBytes);
+
+        return db.update("user", values, "id = ?", new String[]{String.valueOf(userId)});
+    }
+
+    private byte[] convertImageToByteArray(String imagePath) {
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Phương thức upload ảnh
+    public void uploadUserImage(int userId, String imagePath) {
+        byte[] imageBytes = convertImageToByteArray(imagePath);
+        if (imageBytes != null) {
+            updateUserImage(userId, imageBytes);
+        }
+    }
+
+    // Lấy ảnh từ database
+    public Bitmap getUserImage(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("user", new String[]{"image"},
+                "id = ?", new String[]{String.valueOf(userId)},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            @SuppressLint("Range") byte[] imageBytes = cursor.getBlob(cursor.getColumnIndex("image"));
+            cursor.close();
+            return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        }
+        cursor.close();
+        return null;
+    }
+
+    public boolean getEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT email FROM user WHERE email = ?";
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            db.close();
+            return true;
+        } else {
+            cursor.close();
+            db.close();
+            return false;
+        }
+    }
 
 }

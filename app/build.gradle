@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+
+
+//    id 'com.google.gms.google-services'
 }
 
 android {
@@ -14,20 +17,41 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SEND_EMAIL", "\"viet.info.43@gmail.com\""
+        buildConfigField "String", "SEND_PASSWORD", "\"laxkhahzdwdcsqsh\""
+        buildConfigField "String", "SECRET_KEY", "\"62F8514386898BFC9BCE4C39273B2\""
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SEND_EMAIL", "\"viet.info.43@gmail.com\""
+            buildConfigField "String", "SEND_PASSWORD",  "\"laxkhahzdwdcsqsh\""
+            buildConfigField "String", "SECRET_KEY", "\"62F8514386898BFC9BCE4C39273B2\""
+        }
+        debug {
+            buildConfigField "String", "SENDER_EMAIL", "\"viet.info.43@gmail.com\""
+            buildConfigField "String", "SENDER_PASSWORD",  "\"laxkhahzdwdcsqsh\""
+            buildConfigField "String", "SECRET_KEY", "\"62F8514386898BFC9BCE4C39273B2\""
         }
     }
+
+    packagingOptions {
+        // Exclude conflicting files
+        exclude 'META-INF/NOTICE.md'
+        exclude 'META-INF/LICENSE.md'
+    }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 
@@ -47,6 +71,15 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.room.runtime
     annotationProcessor libs.room.compiler
+    implementation 'at.favre.lib:bcrypt:0.9.0'
+    implementation 'com.sun.mail:android-mail:1.6.7'
+    implementation 'com.sun.mail:android-activation:1.6.7'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation platform('com.google.firebase:firebase-bom:33.6.0')
+    implementation 'com.google.firebase:firebase-analytics'
+
 }
 
 java {

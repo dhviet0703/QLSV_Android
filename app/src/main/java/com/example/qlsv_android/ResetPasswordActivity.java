@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlsv_android.Utils.PasswordUtils;
 import com.example.qlsv_android.helper.DatabaseHelper;
 
 public class ResetPasswordActivity extends AppCompatActivity {
@@ -62,13 +63,20 @@ public class ResetPasswordActivity extends AppCompatActivity {
         }
         String finalPassword = password;
         btnComfirm.setOnClickListener(v -> {
-            if(etxtCurrentPass.getText().toString().equals(finalPassword)){
-                if(etxtNewPass.getText().toString().equals(etxtReNewPass.getText().toString())){
-                    ContentValues  values = new ContentValues();
+            String currentPassword = etxtCurrentPass.getText().toString();
+            String newPassword = etxtNewPass.getText().toString();
+            String reNewPassword = etxtReNewPass.getText().toString();
+
+            if (PasswordUtils.verifyPassword(currentPassword, finalPassword)) {
+                if (newPassword.equals(reNewPassword)) {
+                    String hashedNewPassword = PasswordUtils.hashPassword(newPassword);
+
+                    ContentValues values = new ContentValues();
                     String selection = "username = ?";
                     String[] selectionArgs = {username};
-                    values.put("password", etxtNewPass.getText().toString());
-                    int count = db.update("user", values,selection, selectionArgs);
+                    values.put("password", hashedNewPassword);
+
+                    int count = db.update("user", values, selection, selectionArgs);
 
                     if (count > 0) {
                         Toast.makeText(ResetPasswordActivity.this, "Cập nhật mật khẩu thành công!", Toast.LENGTH_SHORT).show();

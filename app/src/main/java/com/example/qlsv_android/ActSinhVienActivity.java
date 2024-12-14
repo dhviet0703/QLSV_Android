@@ -33,12 +33,12 @@ public class ActSinhVienActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
 
     SQLiteDatabase db;
-    EditText etxtAdd, etxtDelete, etxtView, etxtList, etxtUpdate, etxtAddClass;
+    EditText etxtAddKhoa, etxtAdd, etxtDelete, etxtView, etxtList, etxtUpdate, etxtAddClass;
     Button btnAdd, btnDelete, btnView, btnList, btnSearch, btnAddClass, btnDeleteClass, btnUpdateClass;
 
-    Spinner spnUpdateClass, spnDeleteClass;
+    Spinner spnUpdateClass;
     ImageButton imageBack;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class ActSinhVienActivity extends AppCompatActivity {
         etxtList = findViewById(R.id.etxtList);
         etxtUpdate = findViewById(R.id.etxtUpdate);
         etxtAddClass = findViewById(R.id.etxtAddClass);
-        spnDeleteClass = findViewById(R.id.spnDeleteClass);
+        etxtAddKhoa = findViewById(R.id.etxtAddKhoa);
         spnUpdateClass = findViewById(R.id.spnUpdateClass);
 
         btnAdd = findViewById(R.id.btnAdd);
@@ -332,26 +332,7 @@ public class ActSinhVienActivity extends AppCompatActivity {
             }
         });
 
-        String query = "SELECT ten_lop, khoa FROM Lop_Hoc";
-        List<String> classList = new ArrayList<>();
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if(cursor.moveToFirst()){
-            do {
-                @SuppressLint("Range") String tenLop = cursor.getString(cursor.getColumnIndex("ten_lop"));
-                classList.add(tenLop);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                ActSinhVienActivity.this,
-                android.R.layout.simple_list_item_1,
-                classList
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnUpdateClass.setAdapter(adapter);
+        updateClassSpinner();
 
         btnUpdateClass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,13 +390,137 @@ public class ActSinhVienActivity extends AppCompatActivity {
         btnAddClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String query = "INSERT INTO Lop_Hoc VALUES";
+                String tenLop = etxtAddClass.getText().toString().trim();
+                String khoa = etxtAddKhoa.getText().toString().trim();
+
+                // Kiểm tra dữ liệu đầu vào
+                if (tenLop.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập tên lớp", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (khoa.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập khóa học", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Kiểm tra xem lớp đã tồn tại trong cơ sở dữ liệu chưa
+                String queryCheck = "SELECT COUNT(*) FROM Lop_Hoc WHERE ten_lop = ? AND khoa = ?";
+                Cursor cursor = null;
+                try {
+                    cursor = db.rawQuery(queryCheck, new String[]{tenLop, khoa});
+                    if (cursor.moveToFirst()) {
+                        int count = cursor.getInt(0);
+                        if (count > 0) {
+                            Toast.makeText(getApplicationContext(), "Lớp đã tồn tại", Toast.LENGTH_SHORT).show();
+                            return; // Dừng lại nếu lớp đã tồn tại
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Lỗi khi kiểm tra lớp: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                } finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
+                }
+
+                // Nếu lớp chưa tồn tại, thực hiện thêm vào cơ sở dữ liệu
+                ContentValues values = new ContentValues();
+                values.put("ten_lop", tenLop);
+                values.put("khoa", khoa);
+
+                try {
+                    long result = db.insert("Lop_Hoc", null, values);
+                    if (result != -1) {
+                        Toast.makeText(getApplicationContext(), "Thêm lớp thành công", Toast.LENGTH_SHORT).show();
+                        etxtAddClass.setText("");
+                        etxtAddKhoa.setText("");
+
+                        updateClassSpinner();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Lỗi khi thêm lớp", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Lỗi khi thêm lớp: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+        btnDeleteClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String selectedClass = spnUpdateClass.getSelectedItem().toString();
+
+                if (selectedClass.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng chọn lớp để xóa", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Confirm the deletion
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActSinhVienActivity.this);
+                builder.setTitle("Xóa lớp");
+                builder.setMessage("Bạn có chắc chắn muốn xóa lớp: " + selectedClass + "?");
+
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Perform the delete operation using SQLiteDatabase.delete()
+                        String query = "ten_lop = ?";
+                        String[] whereArgs = { selectedClass };
+                        int rowsAffected = db.delete("Lop_Hoc", query, whereArgs);
+
+                        if (rowsAffected > 0) {
+                            Toast.makeText(getApplicationContext(), "Lớp đã được xóa thành công", Toast.LENGTH_SHORT).show();
+                            updateClassSpinner(); // Refresh the Spinner after deletion
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Không thể xóa lớp", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void updateClassSpinner() {
+        String query = "SELECT ten_lop, khoa FROM Lop_Hoc";
+        List<String> classList = new ArrayList<>();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            do {
+                @SuppressLint("Range") String tenLop = cursor.getString(cursor.getColumnIndex("ten_lop"));
+                classList.add(tenLop);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                ActSinhVienActivity.this,
+                android.R.layout.simple_list_item_1,
+                classList
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnUpdateClass.setAdapter(adapter);
     }
 }

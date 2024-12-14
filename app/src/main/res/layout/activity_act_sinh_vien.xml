@@ -259,7 +259,7 @@
 
                     <EditText
                         android:id="@+id/etxtAddClass"
-                        android:layout_width="242dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
@@ -268,6 +268,20 @@
                         android:ems="10"
                         android:hint="Thêm Lớp Học"
                         android:inputType="text"
+                        android:textAlignment="center"
+                        android:textSize="10sp" />
+
+
+                    <EditText
+                        android:id="@+id/etxtAddKhoa"
+                        android:layout_width="94dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/rounder_layout"
+                        android:gravity="center"
+                        android:hint="Thêm Khoa"
                         android:textAlignment="center"
                         android:textSize="10sp" />
 
@@ -299,10 +313,10 @@
 
                     <Spinner
                         android:id="@+id/spnUpdateClass"
-                        android:layout_width="242dp"
+                        android:layout_width="201dp"
+                        android:layout_height="48dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_height="48dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounder_layout" />
 
@@ -320,6 +334,14 @@
                         android:background="@drawable/rounder_layout"
                         android:text="@string/view" />
 
+                    <Button
+                        android:id="@+id/btnDeleteClass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounder_layout"
+                        android:text="@string/delete" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,28 +354,11 @@
                     android:orientation="horizontal"
                     android:textAlignment="center">
 
-                    <Spinner
-                        android:id="@+id/spnDeleteClass"
-                        android:layout_width="242dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_height="48dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounder_layout" />
-
                     <TextView
                         android:id="@+id/t8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <Button
-                        android:id="@+id/btnDeleteClass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/rounder_layout"
-                        android:text="@string/delete" />
 
                 </LinearLayout>
 

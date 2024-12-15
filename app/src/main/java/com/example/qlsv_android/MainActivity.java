@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         db = dbHelper.getWritableDatabase();
+        dbHelper.addUser("Tran Viet", "viet1", "1234", "sinhvien", "viet1@gmail.com");
+        dbHelper.addUser("Giang Vien Tran Viet", "gvviet", "1234", "giangvien", "gvviet@gmail.com");
 //        dbHelper.addUser("user", "user", "1", "sinhvien");
         edit_login_account = findViewById(R.id.edit_forgot_user);
         edit_login_password = findViewById(R.id.edit_login_password);
@@ -63,7 +65,18 @@ public class MainActivity extends AppCompatActivity {
             User user = dbHelper.getUser(account);
 
             if (user != null) {
-                if (PasswordUtils.verifyPassword(password, user.getPassword())) {
+                int login = 0;
+                if (account.equals("nguyenvana") || account.equals("tranthib") || account.equals("levanc")) {
+                    if (password.equals(user.getPassword())){
+                        login = 1;
+                    }
+                } else {
+                    if (PasswordUtils.verifyPassword(password, user.getPassword())){
+                        login = 1;
+                    }
+                }
+
+                if (login == 1) {
                     String role = user.getRole();
                     String hoten = user.getHoTen();
                     String username = user.getUsername();

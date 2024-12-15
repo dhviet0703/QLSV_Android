@@ -132,13 +132,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // user
         db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
-                "VALUES ('Nguyen Van A', 'nguyenvana', 'password123', '2001-05-12', 'Nam', 'Ha Noi', 'vana@example.com', '0912345678', 'sinhvien', '2023-11-01', '2023-11-01');");
+                "VALUES ('Nguyen Van A', 'nguyenvana', '1234', '2001-05-12', 'Nam', 'Ha Noi', 'vana@example.com', '0912345678', 'sinhvien', '2023-11-01', '2023-11-01');");
         db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
-                "VALUES ('Tran Thi B', 'tranthib', 'password123', '2000-11-22', 'Nu', 'Hai Phong', 'thib@example.com', '0934567890', 'sinhvien', '2023-11-01', '2023-11-01');");
+                "VALUES ('Tran Thi B', 'tranthib', '1234', '2000-11-22', 'Nu', 'Hai Phong', 'thib@example.com', '0934567890', 'sinhvien', '2023-11-01', '2023-11-01');");
         db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
-                "VALUES ('Le Van C', 'levanc', 'password123', '1990-01-15', 'Nam', 'Da Nang', 'vanc@example.com', '0987654321', 'giangvien', '2023-11-01', '2023-11-01');");
+                "VALUES ('Le Van C', 'levanc', '1234', '1990-01-15', 'Nam', 'Da Nang', 'vanc@example.com', '0987654321', 'giangvien', '2023-11-01', '2023-11-01');");
         db.execSQL("INSERT INTO user (ho_ten, username, password, ngay_sinh, gioi_tinh, dia_chi, email, dien_thoai, role, created_at, updated_at) " +
-                "VALUES ('Admin User', 'admin', 'adminpassword', '1985-08-01', 'Nam', 'Ho Chi Minh', 'admin@example.com', '0901234567', 'admin', '2023-11-01', '2023-11-01');");
+                "VALUES ('Admin User', 'admin', '1234', '1985-08-01', 'Nam', 'Ho Chi Minh', 'admin@example.com', '0901234567', 'admin', '2023-11-01', '2023-11-01');");
 
         //sinhvien_detail
 
@@ -223,6 +223,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        db.insert("user", null, values);
         db.close();
     }
+
+
 
 
     @SuppressLint("Range")

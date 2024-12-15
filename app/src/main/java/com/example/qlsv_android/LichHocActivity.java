@@ -31,9 +31,9 @@ import java.util.List;
 
 public class LichHocActivity extends AppCompatActivity {
     DatabaseHelper dbHelper;
-    Button btnTaoLich , btnXoaLich;
+    Button btnTaoLich, btnXoaLich;
 
-    ImageButton imageButtonB ;
+    ImageButton imageButtonB;
     SQLiteDatabase db;
     private int selectedPosition = -1;
 
@@ -49,7 +49,8 @@ public class LichHocActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lich_hoc);
 
         dbHelper = new DatabaseHelper(this);
-        db = dbHelper.getWritableDatabase();;
+        db = dbHelper.getWritableDatabase();
+        ;
 
         String username = getIntent().getStringExtra("username");
         String role = "";
@@ -73,15 +74,17 @@ public class LichHocActivity extends AppCompatActivity {
                     "LichHoc.gio_ket_thuc, " +
                     "Lop_Hoc.ten_lop, " +
                     "Mon_Hoc.ten_mon, " +
-                    "user.ho_ten " +
+                    "user.ho_ten AS giangvien_ho_ten " +
                     "FROM LichHoc " +
                     "JOIN Lop_Hoc ON LichHoc.lop_id = Lop_Hoc.id " +
                     "JOIN Mon_Hoc ON LichHoc.monhoc_id = Mon_Hoc.id " +
                     "JOIN giangvien_detail ON LichHoc.giangvien_id = giangvien_detail.user_id " +
+                    "JOIN user ON giangvien_detail.user_id = user.id " +
                     "WHERE LichHoc.lop_id IN ( " +
                     "    SELECT lop_id " +
                     "    FROM sinhvien_detail " +
-                    "    WHERE user_id = (SELECT id FROM user WHERE username = ?))";
+                    "    WHERE user_id = ? " +
+                    ")";
         } else if ("giangvien".equals(role)) {
             query += "SELECT " +
                     "LichHoc.id AS lichhoc_id, " +
@@ -126,6 +129,11 @@ public class LichHocActivity extends AppCompatActivity {
         btnTaoLich = findViewById(R.id.btnTaoLich);
         btnXoaLich = findViewById(R.id.btnXoaLich);
 
+        btnXoaLich.setVisibility(View.GONE);
+        if ("sinhvien".equals(role)){
+            btnTaoLich.setVisibility(View.GONE);
+        }
+
         imageButtonB.setOnClickListener(v -> finish());
         String finalRole = role;
         btnTaoLich.setOnClickListener(new View.OnClickListener() {
@@ -140,33 +148,33 @@ public class LichHocActivity extends AppCompatActivity {
             }
         });
 
-//        btnXoaLich.setOnClickListener(v -> {
-//            if (selectedPosition >= 0) {
-//                String selectedItem = lichHocList.get(selectedPosition);
-//
-//                // Extract the lichHocId from the selectedItem
-//                int lichHocId = getLichHocIdFromDetails(selectedItem);
-//
-//                if (lichHocId != -1) {
-//                    // Delete the schedule from the database
-//                    int rowsDeleted = db.delete("LichHoc", "id = ?", new String[]{String.valueOf(lichHocId)});
-//                    if (rowsDeleted > 0) {
-//                        Toast.makeText(LichHocActivity.this, "Xóa lịch học thành công!", Toast.LENGTH_SHORT).show();
-//
-//                        // Update the list and UI
-//                        lichHocList.remove(selectedPosition);
-//                        adapter.notifyDataSetChanged();
-//                        selectedPosition = -1; // Reset selected position
-//                    } else {
-//                        Toast.makeText(LichHocActivity.this, "Xóa lịch học thất bại, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Toast.makeText(LichHocActivity.this, "Không thể xác định lịch học để xóa!", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Toast.makeText(LichHocActivity.this, "Vui lòng chọn một lịch học để xóa!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        btnXoaLich.setOnClickListener(v -> {
+            if (selectedPosition >= 0) {
+                String selectedItem = lichHocList.get(selectedPosition);
+
+                // Extract the lichHocId from the selectedItem
+                int lichHocId = getLichHocIdFromDetails(selectedItem);
+
+                if (lichHocId != -1) {
+                    // Delete the schedule from the database
+                    int rowsDeleted = db.delete("LichHoc", "id = ?", new String[]{String.valueOf(lichHocId)});
+                    if (rowsDeleted > 0) {
+                        Toast.makeText(LichHocActivity.this, "Xóa lịch học thành công!", Toast.LENGTH_SHORT).show();
+
+                        // Update the list and UI
+                        lichHocList.remove(selectedPosition);
+                        adapter.notifyDataSetChanged();
+                        selectedPosition = -1; // Reset selected position
+                    } else {
+                        Toast.makeText(LichHocActivity.this, "Xóa lịch học thất bại, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(LichHocActivity.this, "Không thể xác định lịch học để xóa!", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(LichHocActivity.this, "Vui lòng chọn một lịch học để xóa!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnXoaLich.setOnClickListener(v -> {
             if (selectedPosition >= 0) {

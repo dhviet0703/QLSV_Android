@@ -93,9 +93,15 @@ public class studentHome extends AppCompatActivity implements NavigationView.OnN
         btnLichHocSV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCalendar = new Intent(studentHome.this, LichHocActivity.class);
-                intentCalendar.putExtra("username", username);
-                startActivity(intentCalendar);
+                int a = 1;
+                try {
+                    Intent intentCalendar = new Intent(studentHome.this, LichHocActivity.class);
+                    intentCalendar.putExtra("username", username);
+                    startActivity(intentCalendar);
+                } catch (Exception e) {
+                    Log.e("btnLichHocSV", "Error while starting activity", e);
+                }
+
             }
         });
 
